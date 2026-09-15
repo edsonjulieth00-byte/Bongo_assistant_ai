@@ -1,9 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import UploadFile, File, Form
-import fitz  # PyMuPDF
-import tempfile
-import os
 
 from api.chat import router as chat_router
 from api.file_chat import router as file_chat_router
@@ -14,16 +10,31 @@ app = FastAPI(
     description="AI assistant for Tanzania government services",
     version="1.0.0",
 )
+
+
+# ============================================================
+# CORS
+# ============================================================
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        # Local development
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+
+        # Production frontend
+        "https://bongo-assistant-ai1.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# ============================================================
+# API ROUTES
+# ============================================================
 
 app.include_router(
     chat_router,
@@ -38,6 +49,10 @@ app.include_router(
 )
 
 
+# ============================================================
+# ROOT ENDPOINT
+# ============================================================
+
 @app.get("/")
 def root():
     return {
@@ -45,6 +60,10 @@ def root():
         "status": "success",
     }
 
+
+# ============================================================
+# HEALTH CHECK
+# ============================================================
 
 @app.get("/health")
 def health():
