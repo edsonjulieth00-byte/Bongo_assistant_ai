@@ -581,7 +581,7 @@ export default function Home() {
         );
 
         response = await fetch(
-          "http://127.0.0.1:8001/api/chat-with-file",
+          "https://bongo-assistant-ai.onrender.com/api/chat-with-file",
           {
             method: "POST",
             body: formData,
@@ -594,7 +594,7 @@ export default function Home() {
        */
       else {
         response = await fetch(
-          "http://127.0.0.1:8001/api/chat",
+          "https://bongo-assistant-ai.onrender.com/api/chat",
           {
             method: "POST",
             headers: {
